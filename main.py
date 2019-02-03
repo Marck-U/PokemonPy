@@ -1,28 +1,68 @@
 from contants import*
-from Modelo import*
+from model.Battle import *
+from model.Pokemon import *
 #Definicion de los stat de los pokemon
-pokemon1 = Pokemon("Bulbasaur", 100, "grass", "poison")
+pokemon1 = Pokemon("Bulbasaur", 78, "grass", "poison")
 pokemon2 = Pokemon("Charmander", 100, "fire", None)
 pokemon1.current_hp = 45
 pokemon2.current_hp = 39
 
 #Stats
-pokemon1.stats = {
-    HP: 45,
-    ATTACK: 49,
-    DEFENSE: 49,
-    SPATTACK: 65,
-    SPDEFENSE: 65,
-    SPEED: 45
+pokemon1.baseStats = {
+    HP: 108,
+    ATTACK: 130,
+    DEFENSE: 95,
+    SPATTACK: 80,
+    SPDEFENSE: 85,
+    SPEED: 102
 }
 
-pokemon2.stats = {
+pokemon1.ev = {
+   HP: 74,
+   ATTACK: 190,
+   DEFENSE: 91,
+   SPATTACK: 48,
+   SPDEFENSE: 84,
+   SPEED: 23
+}
+
+pokemon1.iv = {
+    HP: 24,
+    ATTACK: 12,
+    DEFENSE: 30,
+    SPATTACK: 16,
+    SPDEFENSE: 23,
+    SPEED: 5
+}
+
+pokemon1.compute_stats()
+print(pokemon1.stats)
+
+pokemon2.baseStats = {
     HP: 39,
-    ATTACK: 52,
-    DEFENSE: 43,
-    SPATTACK: 80,
-    SPDEFENSE: 65,
-    SPEED: 65
+    ATTACK: 12,
+    DEFENSE: 30,
+    SPATTACK: 16,
+    SPDEFENSE: 23,
+    SPEED: 5
+}
+
+pokemon2.ev = {
+    HP: 0,
+    ATTACK: 0,
+    DEFENSE: 0,
+    SPATTACK: 0,
+    SPDEFENSE: 0,
+    SPEED: 0
+}
+
+pokemon2.iv = {
+    HP: 21,
+    ATTACK: 21,
+    DEFENSE: 21,
+    SPATTACK: 21,
+    SPDEFENSE: 21,
+    SPEED: 21
 }
 
 #Ataques
@@ -37,7 +77,7 @@ def ask_command(pokemon):
     command = None
     while not command:
         #DO ATTACK -> attack 0
-        tmp_command = input ("¿Que deberia "+pokemon.name+" hacer?").split(" ")
+        tmp_command = input ("¿Que deberia hacer " + pokemon.name + " ?").split(" ")
         if len(tmp_command) == 2:
             try:
                 if tmp_command[0] == DO_ATTACK and 0 <= int(tmp_command[1]) < 4:
@@ -57,6 +97,6 @@ while not battle.is_finished():
     turn.command2 = command2
 
     if turn.can_start():
-        battle.excecute_turn(turn)
+        battle.execute_turn(turn)
         battle.print_current_status()
         
